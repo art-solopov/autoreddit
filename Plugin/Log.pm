@@ -37,7 +37,7 @@ This plugin's version always returns true
 
 =cut
 
-sub is_acceptable($$)
+sub is_processable($$)
 {
     my $this = shift;
     my $url = shift;
