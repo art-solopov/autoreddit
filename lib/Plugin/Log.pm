@@ -41,7 +41,7 @@ sub is_processable($$)
 {
     my $this = shift;
     my $url = shift;
-    return true;
+    return 1;
 }
 
 =pod
@@ -59,6 +59,7 @@ sub process($$)
     open my $fh, '>>', $this->{ logfile };
     print $fh "$url\n";
     close $fh;
+    return;
 }
 
 1;
