@@ -1,5 +1,4 @@
 use Test::More;
-use lib '..';
 use File::Basename;
 
 BEGIN 
@@ -34,6 +33,7 @@ for(@pic_urls)
     $plugin->process($_);
     my ($name) = fileparse($_);
     ok(-e $name, '$name exists');
+    unlink($name);
 }
 
 done_testing();

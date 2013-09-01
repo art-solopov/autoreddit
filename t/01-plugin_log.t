@@ -1,5 +1,4 @@
 use Test::More;
-use lib '..';
 
 BEGIN 
 {
