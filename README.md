@@ -9,7 +9,6 @@ Requirements
 Build requirements:
 
 * Dist::Zilla
-* Dist::Zilla::Plugin::Run::AfterBuild
 * ExtUtils::MakeMaker
 * Devel::Cover
 * Test::More
