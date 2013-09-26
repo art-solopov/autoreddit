@@ -37,23 +37,42 @@ Should return true if URL $url is processable
 
 sub is_processable
 {
-    return undef;
+	my $this = shift;
+	my $url = shift;
+    return;
 }
 
 =pod
 
 =head2 process
 
-    'Plugin::Name'->process($url, @params);
+    'Plugin::Name'->process($url, $target);
 
-Should process URL $url with respect to @params.
-
-Params should include:
-
-=over 8
-
-=item subreddit - a subreddit 
-
-=back
+Process URL $url to target $target.
 
 =cut
+
+sub process
+{
+	my $this = shift;
+	my $url = shift;
+	my $target = shift;
+	return;
+}
+
+=pod
+
+=head2 finalize
+
+	'Plugin::Name'->finalize();
+	
+Finalize the plugin (e.g. close the filehandles, databases, sockets,
+etc).
+
+=cut
+
+sub finalize
+{
+	my $this = shift;
+	return;
+}
