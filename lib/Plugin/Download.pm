@@ -1,40 +1,46 @@
+package Plugin::Download;
+
 use strict;
 use warnings;
-package Plugin::Download;
+use base qw(Plugin::Base);
+
+=pod
+
+=head1 Plugin::Download
+
+A plugin that downloads the URLs.
+
+=cut
 
 use LWP::Simple;
 use Try::Tiny;
 use File::Basename;
 
-sub new($$)
-{
-    my $cls = shift;
-    my $this = {};
-    return bless $this, $cls;
-}
-
-sub is_processable($$)
+sub is_processable
 {
     my $this = shift;
     my $url = shift;
     return $url =~ qr{^https?://.*\.(jpg|jpeg|gif|png|tiff)};
 }
 
-sub process($$)
+sub process
 {
     my $this = shift;
     my $url = shift;
+    my $target = shift;
     my $filename = fileparse $url;
+    my $path = "$target/$filename";
     try
     {
-        getstore($url, $filename);
+        getstore($url, $path);
     }
     catch
     {
-        print "$filename can't be saved.\n";
-        unlink $filename;
+        print STDERR "$filename can't be saved.\n";
+        unlink $path;
+        return;
     };
-    return;
+    return $path;
 }
 
 1;

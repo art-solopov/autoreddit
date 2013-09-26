@@ -1,7 +1,7 @@
+package Plugin::Base;
+
 use strict;
 use warnings;
-
-package Plugin::Base;
 
 =pod
 
@@ -74,5 +74,7 @@ etc).
 sub finalize
 {
 	my $this = shift;
-	return;
+	return 1;
 }
+
+1;

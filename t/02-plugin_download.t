@@ -16,7 +16,9 @@ my @non_pic_urls = qw( http://youtu.be/SRGJOaWNcys
                        http://neko-rina.deviantart.com/art/AT-Shurei90-396045366
                      );
 
-my $plugin = Plugin::Download->new;
+my $plugin = 'Plugin::Download';
+my $testdir = 'test';
+mkdir $testdir;
 
 for(@non_pic_urls)
 {
@@ -30,10 +32,11 @@ for(@pic_urls)
 
 for(@pic_urls)
 {
-    $plugin->process($_);
-    my ($name) = fileparse($_);
+    $plugin->process($_, $testdir);
+    my ($name) = "$testdir/" . fileparse($_);
     ok(-e $name, '$name exists');
     unlink($name);
 }
 
+rmdir $testdir;
 done_testing();

@@ -1,3 +1,9 @@
+package Plugin::Log;
+
+use strict;
+use warnings;
+use base qw(Plugin::Base);
+
 =pod
 
 =head1 Plugin::Log
@@ -5,61 +11,45 @@
 A plugin that just logs the link instead of 
 downloading it
 
-=cut
+=head2 MODULE VARIABLES
 
-package Plugin::Log;
-
-=pod
-
-=head2 methods
-
-=head3 new
-
-The constructor. Accepts the log filename
+$_filehandles - ref to the hash of currently open filehandles
+(target => filehandle)
 
 =cut
 
-sub new($$)
-{
-    my $cls = shift;
-    my $logfile = shift;
-    my $this = {logfile => $logfile};
-    return bless $this, $cls;
-}
+our $_filehandles = {};
 
-=pod
-
-=head3 is_processable
-
-Whether URL is processable by this plugin
-
-This plugin's version always returns true
-
-=cut
-
-sub is_processable($$)
+sub is_processable
 {
     my $this = shift;
     my $url = shift;
     return 1;
 }
 
-=pod
-
-=head3 process
-
-Processes the URL
-
-=cut
-
-sub process($$)
+sub process
 {
     my $this = shift;
     my $url = shift;
-    open my $fh, '>>', $this->{ logfile };
+    my $target = shift;
+    unless ($_filehandles->{ $target })
+    {
+		open my $f, '>>', "$target/__not_saved.log";
+		$_filehandles->{ $target } = $f;
+	}
+    my $fh = $_filehandles->{ $target };
     print $fh "$url\n";
-    close $fh;
     return;
+}
+
+sub finalize
+{
+	my $this = shift;
+	for (values %$_filehandles)
+	{
+		close $_;
+	}
+	return 1;
 }
 
 1;
