@@ -10,4 +10,8 @@ use Module::Load;
 use lib 'lib';
 use autoreddit;
 
-autoreddit->get_saved_links;
+my $config = YAML::LoadFile('config.yaml');
+my $links = autoreddit->get_saved_links($config);
+
+use Data::Dumper;
+print Dumper($links);

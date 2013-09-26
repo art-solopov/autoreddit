@@ -19,6 +19,8 @@ Run requirements:
 * LWP::Simple (for Download plugin)
 * Try::Tiny (for Download plugin)
 * File::Basename (for Download plugin)
+* YAML
+* JSON
 
 You can find out run requirements by running
 
