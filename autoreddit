@@ -11,7 +11,7 @@ use lib 'lib';
 use autoreddit;
 
 my $config = YAML::LoadFile('config.yaml');
-my $links = autoreddit->get_saved_links($config);
+my $links = autoreddit->get_saved_links($config->{ saved_url });
 
 use Data::Dumper;
 print Dumper($links);
