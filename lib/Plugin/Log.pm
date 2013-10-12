@@ -13,12 +13,12 @@ downloading it
 
 =head2 MODULE VARIABLES
 
-$_filehandles - ref to the hash of currently open filehandles
+$filehandles - ref to the hash of currently open filehandles
 (target => filehandle)
 
 =cut
 
-our $_filehandles = {};
+our $filehandles = {};
 
 sub is_processable
 {
@@ -32,12 +32,12 @@ sub process
     my $this = shift;
     my $url = shift;
     my $target = shift;
-    unless ($_filehandles->{ $target })
+    unless ($filehandles->{ $target })
     {
 		open my $f, '>>', "$target/__not_saved.log";
-		$_filehandles->{ $target } = $f;
+		$filehandles->{ $target } = $f;
 	}
-    my $fh = $_filehandles->{ $target };
+    my $fh = $filehandles->{ $target };
     print $fh "$url\n";
     return;
 }
@@ -45,7 +45,7 @@ sub process
 sub finalize
 {
 	my $this = shift;
-	for (values %$_filehandles)
+	for (values %$filehandles)
 	{
 		close $_;
 	}

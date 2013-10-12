@@ -36,7 +36,7 @@ sub process
     }
     catch
     {
-        print STDERR "$filename can't be saved.\n";
+        print STDERR "$filename can't be saved.\n$_\n";
         unlink $path;
         return;
     };
