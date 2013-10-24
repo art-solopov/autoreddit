@@ -8,6 +8,14 @@ autoreddit - the core module of the program.
 
 Contains the core functions.
 
+=head1 SYNOPSIS
+
+    my $autoreddit = autoreddit->new($plugins);
+    $autoreddit->get_saved($url);
+    $autoreddit->process($url);
+
+=head1 METHODS
+
 =cut
 
 use strict;
@@ -19,17 +27,39 @@ use JSON;
 
 =pod
 
-=head1 METHODS
+=head2 new
 
-=head2 get_saved_links($url)
+    my $autoreddit = autoreddit->new($plugins)
+    
+Constructor.
 
-Downloads the list of saved links from Reddit URL $url and parses its JSON.
-
-Returns the hash from parsed JSON.
+$plugins - array ref of plugin names
 
 =cut
 
-sub get_saved_links
+sub new
+{
+    my $class = shift;
+    my $plugins = shift;
+    
+    my $this = {};
+    $this->{ plugins } = $plugins;
+    return bless($this, $class);
+}
+
+=pod
+
+=head2 get_saved
+
+    $autoreddit->get_saved($url)
+
+Downloads the list of saved links from Reddit saved JSON URL $url and parses said JSON.
+
+Returns the parsed JSON.
+
+=cut
+
+sub get_saved
 {
     my $this = shift;
     my $url = shift;
@@ -49,19 +79,18 @@ sub get_saved_links
 
 =pod
 
-=head2 process_saved_links($plugins)
+=head2 process
 
-Processes hash of saved links (retrieved by get_saved_links method) with the
-plugins $plugins.
+    $autoreddit->process($url);
 
-$plugins - array reference of plugin names.
+Processes the url $url
 
 =cut
 
 sub process_saved_links
 {
 	my $this = shift;
-	my $plugins = shift;
+	my $url = shift;
 	# TODO realise
 	return;
 }
