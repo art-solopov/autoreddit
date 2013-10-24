@@ -12,9 +12,9 @@ use autoreddit;
 use autouse 'Data::Dumper' => 'Dumper';
 
 my $config = YAML::LoadFile('config.yaml');
-my $autoreddit = autoreddit->new();
+my $autoreddit = autoreddit->new([qw( Download Log )]);
 my $links = autoreddit->get_saved($config->{ saved_url });
 my $urls = [ map { $_->{ data }{ url } }
 			@{$links->{ data }{ children } } ];
 
-print Dumper($urls);
+for(@$urls){ $autoreddit->process($_);}

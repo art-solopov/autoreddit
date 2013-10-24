@@ -77,6 +77,7 @@ sub get_saved
     else
     {
         print STDERR $res->status_line, "\n";
+        return;
     };
 }
 
@@ -95,20 +96,24 @@ sub process
 	my $this = shift;
 	my $url = shift;
 	
-    for my $plugin ($this->{ plugins })
+    for my $plugin (@{$this->{ plugins } })
     {
+        # This var is needed to determine the end of the cycle.
+        # If I just put last into this, the warning is risen.
+        my $prc = undef;
         try
         {
             if("Plugin::$plugin"->is_processable($url))
             {
-                #"Plugin::$plugin"->process($url);
-                print "Plugin::$plugin processes $url\n";
+                "Plugin::$plugin"->process($url);
+                $prc = 1;
             }
         }
         catch
         {
             print STDERR "Error in plugin $plugin processing URL $url\n$_\n";
-        }
+        };
+        return 1 if $prc;
     }
     
 	return;
