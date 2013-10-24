@@ -9,9 +9,12 @@ use YAML;
 use Module::Load;
 use lib 'lib';
 use autoreddit;
+use autouse 'Data::Dumper' => 'Dumper';
 
 my $config = YAML::LoadFile('config.yaml');
-my $links = autoreddit->get_saved_links($config->{ saved_url });
+my $autoreddit = autoreddit->new();
+my $links = autoreddit->get_saved($config->{ saved_url });
+my $urls = [ map { $_->{ data }{ url } }
+			@{$links->{ data }{ children } } ];
 
-use Data::Dumper;
-print Dumper($links);
+print Dumper($urls);

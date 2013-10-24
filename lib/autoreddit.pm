@@ -22,6 +22,8 @@ use strict;
 use warnings;
 use LWP::UserAgent;
 use JSON;
+use Try::Tiny;
+use Module::Load;
 
 # ABSTRACT: Automatical Reddit download program
 
@@ -44,6 +46,7 @@ sub new
     
     my $this = {};
     $this->{ plugins } = $plugins;
+    for(@$plugins){load "Plugin::$_"};
     return bless($this, $class);
 }
 
@@ -87,11 +90,27 @@ Processes the url $url
 
 =cut
 
-sub process_saved_links
+sub process
 {
 	my $this = shift;
 	my $url = shift;
-	# TODO realise
+	
+    for my $plugin ($this->{ plugins })
+    {
+        try
+        {
+            if("Plugin::$plugin"->is_processable($url))
+            {
+                #"Plugin::$plugin"->process($url);
+                print "Plugin::$plugin processes $url\n";
+            }
+        }
+        catch
+        {
+            print STDERR "Error in plugin $plugin processing URL $url\n$_\n";
+        }
+    }
+    
 	return;
 }
 
