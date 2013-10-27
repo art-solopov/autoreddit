@@ -30,6 +30,7 @@ sub process
     my $target = shift;
     my $filename = fileparse $url;
     my $path = "$target/$filename";
+    return if(-e $path);
     try
     {
         getstore($url, $path);
