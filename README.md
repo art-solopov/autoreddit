@@ -15,6 +15,7 @@ Build requirements:
 
 Run requirements:
 
+* Perl v5.10 or higher
 * Module::Load
 * LWP::Simple (for Download plugin)
 * Try::Tiny (for Download plugin)
@@ -25,8 +26,21 @@ Run requirements:
 You can find out run requirements by running
 
     dzil listdeps
+    
+Config
+------
+
+Example config is in the config.yaml.skel file. Just copy it, rename the copy
+as config.yaml and fill in the gaps.
 
 Usage
 ------
 
     ./autoreddit
+
+TODO
+----
+
+* Expand config documentation
+* Add plugin documentation
+* Make it Windows-friendly
