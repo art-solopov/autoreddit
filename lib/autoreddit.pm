@@ -20,10 +20,12 @@ Contains the core functions.
 
 use strict;
 use warnings;
+use v5.10;
 use LWP::UserAgent;
 use JSON;
 use Try::Tiny;
 use Module::Load;
+use autouse 'Data::Dumper' => 'Dumper';
 
 # ABSTRACT: Automatical Reddit download program
 
@@ -31,11 +33,25 @@ use Module::Load;
 
 =head2 new
 
-    my $autoreddit = autoreddit->new($plugins)
+    my $autoreddit = autoreddit->new($plugins, $groups, $dir)
     
 Constructor.
 
 $plugins - array ref of plugin names
+
+$groups - hash ref of groups, organized like this:
+
+{
+    group1 => ['subreddit1', 'subreddit2', ...],
+    group2 => ['subreddit3', ...],
+    ...,
+    rootgroup => ['subredditX', ...]
+}
+
+$dir - download directory
+
+Rootgroup is the group of subreddits which submissions will go into the
+download directory itself.
 
 =cut
 
@@ -43,9 +59,13 @@ sub new
 {
     my $class = shift;
     my $plugins = shift;
+    my $groups = shift;
+    my $dir = shift;
     
     my $this = {};
+    $this->{ groups } = $groups;
     $this->{ plugins } = $plugins;
+    $this->{ dir } = $dir;
     for(@$plugins){load "Plugin::$_"};
     return bless($this, $class);
 }
@@ -85,9 +105,9 @@ sub get_saved
 
 =head2 process
 
-    $autoreddit->process($url);
+    $autoreddit->process($url, $subreddit);
 
-Processes the url $url
+Processes the url $url from subreddit $subreddit
 
 =cut
 
@@ -95,6 +115,11 @@ sub process
 {
 	my $this = shift;
 	my $url = shift;
+    my $subreddit = shift;
+    my $target = $this->_get_target($subreddit);
+    $target = '.' if $target eq 'rootgroup';
+    $target = "$this->{ dir }/$target";
+    mkdir $target unless -e $target;
 	
     for my $plugin (@{$this->{ plugins } })
     {
@@ -105,7 +130,7 @@ sub process
         {
             if("Plugin::$plugin"->is_processable($url))
             {
-                "Plugin::$plugin"->process($url);
+                "Plugin::$plugin"->process($url, $target);
                 $prc = 1;
             }
         }
@@ -117,6 +142,31 @@ sub process
     }
     
 	return;
+}
+
+=pod
+
+=head2 _get_target
+
+    $this->_get_target($subreddit)
+    
+Get the group associated with the subreddit.
+
+TODO: use Memoize to increase performance
+
+=cut
+
+sub _get_target
+{
+    my $this = shift;
+    my $subreddit = shift;
+    
+    for my $group (keys $this->{ groups })
+    {
+        return $group if($subreddit ~~ $this->{ groups }->{ $group });
+    }
+    
+    return $subreddit;
 }
 
 1;

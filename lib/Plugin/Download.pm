@@ -33,7 +33,9 @@ sub process
     return if(-e $path);
     try
     {
-        getstore($url, $path);
+        print "Getting $url -> $path : ";
+        my $st = getstore($url, $path);
+        print "$st\n";
     }
     catch
     {
