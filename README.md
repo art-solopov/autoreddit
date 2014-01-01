@@ -17,21 +17,26 @@ Run requirements:
 
 * Perl v5.10 or higher
 * Module::Load
+* File::Spec
 * LWP::Simple (for Download plugin)
 * Try::Tiny (for Download plugin)
 * File::Basename (for Download plugin)
 * YAML
 * JSON
-
-You can find out run requirements by running
-
-    dzil listdeps
     
 Config
 ------
 
 Example config is in the config.yaml.skel file. Just copy it, rename the copy
 as config.yaml and fill in the gaps.
+
+Config fields are:
+
+* rootgroup - the group of subreddits that will be saved in the root
+directory (i.e. with no subfolders);
+* dir - the root dir of the saved files
+(i.e. where the subreddits subdirectories and files from rootgroup will be saved);
+* saved_url - the URL of your JSON saved links feed.
 
 Usage
 ------
@@ -44,3 +49,4 @@ TODO
 * Expand config documentation
 * Add plugin documentation
 * Make it Windows-friendly
+* Make it use actual Reddit authentication

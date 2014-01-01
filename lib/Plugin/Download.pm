@@ -15,6 +15,7 @@ A plugin that downloads the URLs.
 use LWP::Simple;
 use Try::Tiny;
 use File::Basename;
+use File::Spec::Functions;
 
 sub is_processable
 {
@@ -29,7 +30,7 @@ sub process
     my $url = shift;
     my $target = shift;
     my $filename = fileparse $url;
-    my $path = "$target/$filename";
+    my $path = catfile($target, $filename);
     return if(-e $path);
     try
     {

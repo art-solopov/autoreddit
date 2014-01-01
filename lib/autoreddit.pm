@@ -25,6 +25,7 @@ use LWP::UserAgent;
 use JSON;
 use Try::Tiny;
 use Module::Load;
+use File::Spec::Functions;
 use autouse 'Data::Dumper' => 'Dumper';
 
 # ABSTRACT: Automatical Reddit download program
@@ -118,7 +119,7 @@ sub process
     my $subreddit = shift;
     my $target = $this->_get_target($subreddit);
     $target = '.' if $target eq 'rootgroup';
-    $target = "$this->{ dir }/$target";
+    $target = catfile($this->{ dir }, $target);
     mkdir $target unless -e $target;
 	
     for my $plugin (@{$this->{ plugins } })

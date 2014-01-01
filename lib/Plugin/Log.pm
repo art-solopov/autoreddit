@@ -18,6 +18,8 @@ $filehandles - ref to the hash of currently open filehandles
 
 =cut
 
+use File::Spec::Functions;
+
 our $filehandles = {};
 
 sub is_processable
@@ -34,7 +36,7 @@ sub process
     my $target = shift;
     unless ($filehandles->{ $target })
     {
-		open my $f, '>>', "$target/__not_saved.log";
+		open my $f, '>>', catfile($target, "__not_saved.log");
 		$filehandles->{ $target } = $f;
 	}
     my $fh = $filehandles->{ $target };
