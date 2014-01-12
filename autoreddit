@@ -15,7 +15,7 @@ my $config = YAML::LoadFile('config.yaml');
 my $dir = $config->{ dir };
 my $groups = $config->{ groups };
 $groups->{ rootgroup } = $config->{ rootgroup };
-print Dumper($groups);
+#print Dumper($groups);
 my $autoreddit = autoreddit->new([qw( Download Log )], $groups, $dir);
 my $links = autoreddit->get_saved($config->{ saved_url });
 my $urls = [ map { [ $_->{ data }{ url }, $_->{ data }{ subreddit } ] }
