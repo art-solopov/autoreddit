@@ -42,12 +42,14 @@ $plugins - array ref of plugin names
 
 $groups - hash ref of groups, organized like this:
 
-{
-    group1 => ['subreddit1', 'subreddit2', ...],
-    group2 => ['subreddit3', ...],
-    ...,
-    rootgroup => ['subredditX', ...]
-}
+    {
+        group1 => ['subreddit1', 'subreddit2', ...],
+        group2 => ['subreddit3', ...],
+        ...,
+        rootgroup => ['subredditX', ...]
+    }
+
+We assume that there is no subreddit belongs in more than one group.
 
 $dir - download directory
 
