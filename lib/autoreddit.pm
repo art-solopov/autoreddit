@@ -66,7 +66,17 @@ sub new
     my $dir = shift;
     
     my $this = {};
-    $this->{ groups } = $groups;
+
+    # Processing groups
+    while ( my ($gr_name, $subs) = each %$groups)
+    {
+	for my $sub (@$subs)
+	{
+	    $this->{ groups }->{ $sub } = $gr_name;
+	}
+    }
+
+
     $this->{ plugins } = $plugins;
     $this->{ dir } = $dir;
     for(@$plugins){load "Plugin::$_"};
@@ -116,8 +126,8 @@ Processes the url $url from subreddit $subreddit
 
 sub process
 {
-	my $this = shift;
-	my $url = shift;
+    my $this = shift;
+    my $url = shift;
     my $subreddit = shift;
     my $target = $this->_get_target($subreddit);
     $target = '.' if $target eq 'rootgroup';
@@ -164,12 +174,12 @@ sub _get_target
     my $this = shift;
     my $subreddit = shift;
     
-    for my $group (keys $this->{ groups })
-    {
-        return $group if($subreddit ~~ $this->{ groups }->{ $group });
-    }
+    #for my $group (keys $this->{ groups })
+    #{
+    #    return $group if($subreddit ~~ $this->{ groups }->{ $group });
+    #}
     
-    return $subreddit;
+    return $this->{ groups }->{ $subreddit } || $subreddit;
 }
 
 1;
