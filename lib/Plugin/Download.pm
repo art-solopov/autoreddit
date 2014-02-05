@@ -36,7 +36,7 @@ sub process
     {
         #print "Getting $url -> $path : ";
         my $st = getstore($url, $path);
-        print "$st\n";
+	#print "$st\n";
     }
     catch
     {
