@@ -37,8 +37,8 @@ Should return true if URL $url is processable
 
 sub is_processable
 {
-	my $this = shift;
-	my $url = shift;
+    my $this = shift;
+    my $url = shift;
     return;
 }
 
@@ -54,18 +54,18 @@ Process URL $url to target $target.
 
 sub process
 {
-	my $this = shift;
-	my $url = shift;
-	my $target = shift;
-	return;
+    my $this = shift;
+    my $url = shift;
+    my $target = shift;
+    return;
 }
 
 =pod
 
 =head2 finalize
 
-	'Plugin::Name'->finalize();
-	
+    'Plugin::Name'->finalize();
+    
 Finalize the plugin (e.g. close the filehandles, databases, sockets,
 etc).
 
@@ -73,8 +73,8 @@ etc).
 
 sub finalize
 {
-	my $this = shift;
-	return 1;
+    my $this = shift;
+    return 1;
 }
 
 1;

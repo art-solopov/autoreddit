@@ -34,9 +34,9 @@ sub process
     return if(-e $path);
     try
     {
-	#print "Getting $url -> $path\n";
+        #print "Getting $url -> $path\n";
         my $st = getstore($url, $path);
-	#print "$st\n";
+        #print "$st\n";
     }
     catch
     {

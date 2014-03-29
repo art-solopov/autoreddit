@@ -36,9 +36,9 @@ sub process
     my $target = shift;
     unless ($filehandles->{ $target })
     {
-		open my $f, '>>', catfile($target, "__not_saved.log");
-		$filehandles->{ $target } = $f;
-	}
+        open my $f, '>>', catfile($target, "__not_saved.log");
+        $filehandles->{ $target } = $f;
+    }
     my $fh = $filehandles->{ $target };
     print $fh "$url\n";
     return;
@@ -46,12 +46,12 @@ sub process
 
 sub finalize
 {
-	my $this = shift;
-	for (values %$filehandles)
-	{
-		close $_;
-	}
-	return 1;
+    my $this = shift;
+    for (values %$filehandles)
+    {
+        close $_;
+    }
+    return 1;
 }
 
 1;

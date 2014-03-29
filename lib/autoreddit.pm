@@ -70,10 +70,10 @@ sub new
     # Processing groups
     while ( my ($gr_name, $subs) = each %$groups)
     {
-	for my $sub (@$subs)
-	{
-	    $this->{ groups }->{ $sub } = $gr_name;
-	}
+        for my $sub (@$subs)
+        {
+            $this->{ groups }->{ $sub } = $gr_name;
+        }
     }
 
 
@@ -133,7 +133,6 @@ sub process
     $target = '.' if $target eq 'rootgroup';
     $target = catfile($this->{ dir }, $target);
     mkdir $target unless -e $target;
-	
     for my $plugin (@{$this->{ plugins } })
     {
         # This var is needed to determine the end of the cycle.
@@ -154,7 +153,7 @@ sub process
         return 1 if $prc;
     }
     
-	return;
+    return;
 }
 
 =pod
