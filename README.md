@@ -68,6 +68,9 @@ Later development:
 
 * Expand config documentation
 * Add plugin documentation
+* Add proper dependencies in dist.ini
+* Add tests in dist.ini
+* Add command-line options (change config file, etc.)
 * Make it Windows-friendly
 * Make more plugins
 
