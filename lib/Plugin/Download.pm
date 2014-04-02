@@ -12,7 +12,7 @@ A plugin that downloads the URLs.
 
 =cut
 
-use LWP::Simple;
+use LWP::UserAgent::ProgressBar;
 use Try::Tiny;
 use File::Basename;
 use File::Spec::Functions;
@@ -29,13 +29,19 @@ sub process
     my $this = shift;
     my $url = shift;
     my $target = shift;
+    my $ua = LWP::UserAgent::ProgressBar->new();
     my $filename = fileparse $url;
     my $path = catfile($target, $filename);
     return if(-e $path);
     try
     {
         #print "Getting $url -> $path\n";
-        my $st = getstore($url, $path);
+        print "$url -> $path\n";
+        my $resp = $ua->get_with_progress($url);
+        die if $resp->code() >= 400;
+        open my $fh, '>', $path;
+        print $fh $resp->decoded_content;
+        close $fh;
         #print "$st\n";
     }
     catch
