@@ -19,3 +19,4 @@ pm_to_blib
 *.tdy
 config.yaml
 .*.swp
+local
