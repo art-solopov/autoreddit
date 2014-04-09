@@ -10,6 +10,7 @@ requires 'Data::Dumper', '2.150';
 
 on 'test' => sub {
     requires 'Test::More', '1.0';
+    requires 'HTTP::Server::Brick';
 };
 
 on 'develop' => sub {
